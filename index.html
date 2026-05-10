@@ -412,29 +412,29 @@
       }
 
       // NORMAL QUESTIONS
-      if(answer === correct) {
+      // NORMAL QUESTIONS
+if(answer === correct) {
 
-        celebrate();
+  celebrate();
 
-        setTimeout(() => {
+  setTimeout(() => {
 
-          currentQuestion++;
+    currentQuestion++;
 
-          if(currentQuestion < questions.length) {
-            showQuestion();
-          } else {
-            quizScreen.classList.add("hidden");
-            finalScreen.classList.remove("hidden");
-          }
-
-        }, 1200);
-
-      } else {
-
-        alert("Wrong answer bb hehe try again ❤️");
-      }
+    if(currentQuestion < questions.length) {
+      showQuestion();
+    } else {
+      quizScreen.classList.add("hidden");
+      finalScreen.classList.remove("hidden");
     }
 
+  }, 1200);
+
+} else {
+
+  alert("Wrong answer bb hehe try again ❤️");
+
+}
     function restartQuiz() {
 
       currentQuestion = 0;
