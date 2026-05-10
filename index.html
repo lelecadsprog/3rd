@@ -407,7 +407,14 @@
 
         const continueBtn = document.createElement("button");
 
-        continueBtn.innerText = "AWWWW 🥺";
+        if(correct === "SPECIAL") {
+
+            continueBtn.innerText = "BABYYYY 🥺❤️";
+
+          } else {
+
+          continueBtn.innerText = "AWWWWW 😭❤️";
+          } 
         continueBtn.classList.add("answer-btn");
 
         continueBtn.onclick = () => {
