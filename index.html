@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Happy 3rd Monthsary, Baby! ❤️</title>
 
   <style>
+
     * {
       margin: 0;
       padding: 0;
@@ -98,10 +100,19 @@
       color: #777;
     }
 
-    video {
+    .countdown {
+      margin-top: 10px;
+      margin-bottom: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #ff4f81;
+    }
+
+    iframe {
       width: 100%;
+      height: 240px;
+      border: none;
       border-radius: 20px;
-      margin-top: 20px;
     }
 
     .heart {
@@ -110,6 +121,7 @@
     }
 
     @media (max-width: 480px) {
+
       h1 {
         font-size: 24px;
       }
@@ -123,6 +135,7 @@
         padding: 13px;
       }
     }
+
   </style>
 </head>
 
@@ -130,8 +143,9 @@
 
   <div class="container">
 
-    <!-- Start Screen -->
+    <!-- START SCREEN -->
     <div id="start-screen">
+
       <div class="heart">🍉</div>
 
       <h1>Happy 3rd Monthsary, Baby!</h1>
@@ -141,19 +155,26 @@
         Answer everything correctly to unlock your surprise 👀❤️
       </p>
 
+      <div class="countdown" id="countdown"></div>
+
       <button class="start-btn" onclick="startQuiz()">
         Start
       </button>
+
     </div>
 
-    <!-- Quiz Screen -->
+    <!-- QUIZ SCREEN -->
     <div id="quiz-screen" class="hidden">
+
       <div class="progress" id="progress"></div>
+
       <div class="question" id="question"></div>
+
       <div class="answers" id="answers"></div>
+
     </div>
 
-    <!-- Final Screen -->
+    <!-- FINAL SCREEN -->
     <div id="final-screen" class="hidden">
 
       <div class="heart">🎉</div>
@@ -167,10 +188,7 @@
 
       <iframe
         src="https://drive.google.com/file/d/1TLnrkfFZZM11ZORgAazeBRcoghKjyKUi/preview"
-        width="100%"
-        height="240"
-        allow="autoplay"
-        style="border:none; border-radius:20px;">
+        allow="autoplay">
       </iframe>
 
       <button class="restart-btn" onclick="restartQuiz()">
@@ -184,23 +202,27 @@
   <script>
 
     const questions = [
+
       {
         question: "Who confessed first?",
         answers: ["Me", "You"],
         correct: "You"
       },
+
       {
         question: "What is our favorite thing to do together?",
         answers: ["Sleep 👀", "Smoke", "Eat"],
         correct: "Eat"
       },
+
       {
         question: "When did I confessed? 😏",
         answers: ["October 18", "December 5", "November 5"],
         correct: "November 5"
       },
+
       {
-        question: "I told you this is before. When was the moment I fell for you?",
+        question: "I told you this before. When was the moment I fell for you?",
         answers: [
           "When you and I were talking about person A and B at smoking area",
           "When you took the left over chicken from izakaya",
@@ -208,25 +230,29 @@
         ],
         correct: "When you took the left over chicken from izakaya"
       },
+
       {
         question: "Color of the first flower I gave you...",
         answers: ["Pink", "Yellow", "Mixed"],
         correct: "Yellow"
       },
+
       {
         question: "Where did you say 'I love you' for the first time?",
         answers: ["At Mika's", "In front of Tokyo Tower", "At Two Face"],
         correct: "At Two Face"
       },
+
       {
         question: "What is the song we slow danced to?",
         answers: [
-          "Can't take my eyes of you",
+          "Can't take my eyes off you",
           "Soft Spot",
-          "Put your head on my shoulders"
+          "Put your head on my shoulder"
         ],
-        correct: "Put your head on my shoulders"
+        correct: "Put your head on my shoulder"
       },
+
       {
         question: "First movie we saw together...",
         answers: [
@@ -236,6 +262,7 @@
         ],
         correct: "Curious Case of Benjamin Button"
       },
+
       {
         question: "What’s my true love language?",
         answers: [
@@ -245,6 +272,7 @@
         ],
         correct: "SPECIAL"
       },
+
       {
         question: "How much do I love you?",
         answers: [
@@ -254,6 +282,7 @@
         ],
         correct: "SPECIAL2"
       }
+
     ];
 
     let currentQuestion = 0;
@@ -262,17 +291,71 @@
     const quizScreen = document.getElementById("quiz-screen");
     const finalScreen = document.getElementById("final-screen");
 
+    // COUNTDOWN TIMER
+    const targetDate = new Date("2026-05-11T00:00:00");
+
+    function updateCountdown() {
+
+      const now = new Date();
+
+      const difference = targetDate - now;
+
+      const countdownEl = document.getElementById("countdown");
+
+      const startBtn = document.querySelector(".start-btn");
+
+      if(difference <= 0) {
+
+        countdownEl.innerHTML =
+          "It’s finally monthsary dayyyy ❤️";
+
+        startBtn.disabled = false;
+        startBtn.style.opacity = "1";
+        startBtn.style.cursor = "pointer";
+
+        return;
+      }
+
+      const hours =
+        Math.floor(difference / (1000 * 60 * 60));
+
+      const minutes =
+        Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+
+      const seconds =
+        Math.floor((difference % (1000 * 60)) / 1000);
+
+      countdownEl.innerHTML =
+        `Unlocks in ${hours}h ${minutes}m ${seconds}s ❤️`;
+
+      startBtn.disabled = true;
+      startBtn.style.opacity = "0.5";
+      startBtn.style.cursor = "not-allowed";
+    }
+
+    setInterval(updateCountdown, 1000);
+
+    updateCountdown();
+
     function startQuiz() {
+
       startScreen.classList.add("hidden");
+
       quizScreen.classList.remove("hidden");
+
       showQuestion();
     }
 
     function showQuestion() {
 
-      const questionEl = document.getElementById("question");
-      const answersEl = document.getElementById("answers");
-      const progressEl = document.getElementById("progress");
+      const questionEl =
+        document.getElementById("question");
+
+      const answersEl =
+        document.getElementById("answers");
+
+      const progressEl =
+        document.getElementById("progress");
 
       const current = questions[currentQuestion];
 
@@ -288,6 +371,7 @@
         const btn = document.createElement("button");
 
         btn.innerText = answer;
+
         btn.classList.add("answer-btn");
 
         btn.onclick = () => checkAnswer(answer);
@@ -319,12 +403,17 @@
         document.body.appendChild(floating);
 
         setTimeout(() => {
+
           floating.style.top = "20vh";
+
           floating.style.opacity = "0";
+
         }, 100);
 
         setTimeout(() => {
+
           floating.remove();
+
         }, 2600);
       }
     }
@@ -332,40 +421,43 @@
     function checkAnswer(answer) {
 
       const current = questions[currentQuestion];
+
       const correct = current.correct;
 
-      // SPECIAL LAST 2 QUESTIONS
+      // SPECIAL QUESTIONS
       if(correct === "SPECIAL" || correct === "SPECIAL2") {
 
-        const answersEl = document.getElementById("answers");
+        const answersEl =
+          document.getElementById("answers");
 
         current.answers =
           current.answers.filter(a => a !== answer);
 
-        // still wrong
         if(current.answers.length > 0) {
 
           if(correct === "SPECIAL") {
 
-                alert("Wrong 🙄");
-
-              } else {
-
-                alert("WRONGGGG 🤪");
-              }
-          showQuestion();
-          return;
-        }
-
-        // reveal real answer
-        if(correct === "SPECIAL") {
-
-            alert("Okay fineee ❤️ Here's the real answer...");
+            alert("Wrong 🙄");
 
           } else {
 
-            alert("At this point I think you deserve the real answer 😭❤️");
+            alert("WRONGGGG 🤪");
           }
+
+          showQuestion();
+
+          return;
+        }
+
+        if(correct === "SPECIAL") {
+
+          alert("Okay fineee ❤️ Here's the real answer...");
+
+        } else {
+
+          alert("At this point I think numbers have failed us 😭❤️");
+        }
+
         answersEl.innerHTML = "";
 
         const gif = document.createElement("img");
@@ -405,16 +497,18 @@
             "The real answer is... <br><br> There’s literally no correct answer because it’s too much ✅😭";
         }
 
-        const continueBtn = document.createElement("button");
+        const continueBtn =
+          document.createElement("button");
 
         if(correct === "SPECIAL") {
 
-            continueBtn.innerText = "BABYYYY 🥺❤️";
+          continueBtn.innerText = "BABYYYY 🥺❤️";
 
-          } else {
+        } else {
 
           continueBtn.innerText = "AWWWWW 😭❤️";
-          } 
+        }
+
         continueBtn.classList.add("answer-btn");
 
         continueBtn.onclick = () => {
@@ -422,9 +516,13 @@
           currentQuestion++;
 
           if(currentQuestion < questions.length) {
+
             showQuestion();
+
           } else {
+
             quizScreen.classList.add("hidden");
+
             finalScreen.classList.remove("hidden");
           }
         };
@@ -437,30 +535,33 @@
       }
 
       // NORMAL QUESTIONS
-      // NORMAL QUESTIONS
-if(answer === correct) {
+      if(answer === correct) {
 
-  celebrate();
+        celebrate();
 
-  setTimeout(() => {
+        setTimeout(() => {
 
-    currentQuestion++;
+          currentQuestion++;
 
-    if(currentQuestion < questions.length) {
-      showQuestion();
-    } else {
-      quizScreen.classList.add("hidden");
-      finalScreen.classList.remove("hidden");
+          if(currentQuestion < questions.length) {
+
+            showQuestion();
+
+          } else {
+
+            quizScreen.classList.add("hidden");
+
+            finalScreen.classList.remove("hidden");
+          }
+
+        }, 1200);
+
+      } else {
+
+        alert("Wrong answer bb hehe try again ❤️");
+      }
     }
 
-  }, 1200);
-
-} else {
-
-  alert("Wrong answer bb hehe try again ❤️");
-
-}
-    }
     function restartQuiz() {
 
       currentQuestion = 0;
@@ -478,6 +579,7 @@ if(answer === correct) {
       ];
 
       finalScreen.classList.add("hidden");
+
       startScreen.classList.remove("hidden");
     }
 
