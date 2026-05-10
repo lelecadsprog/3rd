@@ -345,14 +345,27 @@
         // still wrong
         if(current.answers.length > 0) {
 
-          alert("Wrong answer bb hehe ❤️");
+          if(correct === "SPECIAL") {
+
+                alert("Wrong 🙄");
+
+              } else {
+
+                alert("WRONGGGG 🤪");
+              }
           showQuestion();
           return;
         }
 
         // reveal real answer
-        alert("At this point I think you deserve the real answer 😭❤️");
+        if(correct === "SPECIAL") {
 
+            alert("Okay fineee ❤️ Here's the real answer...");
+
+          } else {
+
+            alert("At this point I think you deserve the real answer 😭❤️");
+          }
         answersEl.innerHTML = "";
 
         const gif = document.createElement("img");
