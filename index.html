@@ -256,13 +256,39 @@
         answersEl.appendChild(btn);
       });
     }
+function celebrate() {
+  document.body.style.background =
+    "linear-gradient(to bottom right, #ffd6ec, #ffe8a3)";
 
-    function checkAnswer(answer) {
+  for(let i = 0; i < 30; i++) {
+    const confetti = document.createElement("div");
+
+    confetti.innerHTML = "🎉";
+    confetti.style.position = "fixed";
+    confetti.style.left = Math.random() * 100 + "vw";
+    confetti.style.top = "-50px";
+    confetti.style.fontSize = "30px";
+    confetti.style.zIndex = "999";
+    confetti.style.transition = "3s linear";
+
+    document.body.appendChild(confetti);
+
+    setTimeout(() => {
+      confetti.style.top = "100vh";
+    }, 100);
+
+    setTimeout(() => {
+      confetti.remove();
+    }, 3000);
+  }
+}
+
+function checkAnswer(answer) {
   const current = questions[currentQuestion];
   const correct = current.correct;
 
-  // SPECIAL QUESTION 1
-  if(correct === "ALL OF IT when it’s from you") {
+  // SPECIAL QUESTIONS
+  if(correct === "SPECIAL" || correct === "SPECIAL2") {
 
     if(!current.clickedAnswers) {
       current.clickedAnswers = [];
@@ -273,67 +299,53 @@
     // remove clicked answer
     current.answers = current.answers.filter(a => a !== answer);
 
-    // after all wrong answers tried
-    if(current.answers.length === 0) {
+    const answersEl = document.getElementById("answers");
 
-      const answersEl = document.getElementById("answers");
+    // LAST WRONG ANSWER
+    if(current.answers.length === 0 && !current.finalShown) {
 
-      answersEl.innerHTML = "";
+      current.finalShown = true;
 
-      const finalBtn = document.createElement("button");
-      finalBtn.innerText = "ALL OF IT when it’s from you ❤️";
-      finalBtn.classList.add("answer-btn");
-
-      finalBtn.onclick = () => {
-        currentQuestion++;
-        showQuestion();
-      };
-
-      answersEl.appendChild(finalBtn);
-
-    } else {
-      alert("Wrong answer hehe ❤️");
-      showQuestion();
-    }
-
-    return;
-  }
-
-  // SPECIAL QUESTION 2
-  if(correct === "There’s literally no correct answer because it’s too much ✅😭") {
-
-    if(!current.clickedAnswers) {
-      current.clickedAnswers = [];
-    }
-
-    current.clickedAnswers.push(answer);
-
-    current.answers = current.answers.filter(a => a !== answer);
-
-    if(current.answers.length === 0) {
-
-      const answersEl = document.getElementById("answers");
+      alert("Wrong answer again HAHAHA 😭❤️");
 
       answersEl.innerHTML = "";
 
+      const msg = document.createElement("p");
+      msg.innerText = "Wait... maybe there’s actually one more answer ❤️";
+      msg.style.marginBottom = "15px";
+
       const finalBtn = document.createElement("button");
-      finalBtn.innerText = "There’s literally no correct answer because it’s too much ✅😭";
+
+      if(correct === "SPECIAL") {
+        finalBtn.innerText = "ALL OF IT when it’s from you ❤️";
+      } else {
+        finalBtn.innerText =
+          "There’s literally no correct answer because it’s too much ✅😭";
+      }
+
       finalBtn.classList.add("answer-btn");
 
       finalBtn.onclick = () => {
-        currentQuestion++;
 
-        if(currentQuestion < questions.length) {
-          showQuestion();
-        } else {
-          quizScreen.classList.add("hidden");
-          finalScreen.classList.remove("hidden");
-        }
+        celebrate();
+
+        setTimeout(() => {
+          currentQuestion++;
+
+          if(currentQuestion < questions.length) {
+            showQuestion();
+          } else {
+            quizScreen.classList.add("hidden");
+            finalScreen.classList.remove("hidden");
+          }
+        }, 1500);
       };
 
+      answersEl.appendChild(msg);
       answersEl.appendChild(finalBtn);
 
     } else {
+
       alert("Wrong answer bb hehe ❤️");
       showQuestion();
     }
@@ -343,20 +355,24 @@
 
   // NORMAL QUESTIONS
   if(answer === correct) {
-    currentQuestion++;
 
-    if(currentQuestion < questions.length) {
-      showQuestion();
-    } else {
-      quizScreen.classList.add("hidden");
-      finalScreen.classList.remove("hidden");
-    }
+    celebrate();
+
+    setTimeout(() => {
+      currentQuestion++;
+
+      if(currentQuestion < questions.length) {
+        showQuestion();
+      } else {
+        quizScreen.classList.add("hidden");
+        finalScreen.classList.remove("hidden");
+      }
+    }, 1000);
 
   } else {
     alert("Wrong answer bb hehe try again ❤️");
   }
 }
-
     function restartQuiz() {
       currentQuestion = 0;
       finalScreen.classList.add("hidden");
