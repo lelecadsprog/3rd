@@ -258,29 +258,34 @@
   });
 }
 function celebrate() {
-  document.body.style.background =
-    "linear-gradient(to bottom right, #ffd6ec, #ffe8a3)";
 
-  for(let i = 0; i < 30; i++) {
-    const confetti = document.createElement("div");
+  const emojis = ["❤️", "✨", "💖"];
 
-    confetti.innerHTML = "🎉";
-    confetti.style.position = "fixed";
-    confetti.style.left = Math.random() * 100 + "vw";
-    confetti.style.top = "-50px";
-    confetti.style.fontSize = "30px";
-    confetti.style.zIndex = "999";
-    confetti.style.transition = "3s linear";
+  for(let i = 0; i < 12; i++) {
 
-    document.body.appendChild(confetti);
+    const floating = document.createElement("div");
+
+    floating.innerHTML =
+      emojis[Math.floor(Math.random() * emojis.length)];
+
+    floating.style.position = "fixed";
+    floating.style.left = Math.random() * 100 + "vw";
+    floating.style.top = "70vh";
+    floating.style.fontSize = "22px";
+    floating.style.opacity = "0.8";
+    floating.style.zIndex = "999";
+    floating.style.transition = "2.5s ease-out";
+
+    document.body.appendChild(floating);
 
     setTimeout(() => {
-      confetti.style.top = "100vh";
+      floating.style.top = "20vh";
+      floating.style.opacity = "0";
     }, 100);
 
     setTimeout(() => {
-      confetti.remove();
-    }, 3000);
+      floating.remove();
+    }, 2600);
   }
 }
 
@@ -305,7 +310,7 @@ function checkAnswer(answer) {
     }
 
     // LAST ANSWER ALSO WRONG
-    alert("Wrong answer again HAHAHA 😭❤️");
+    alert("At this point I think you deserve the real answer 😭❤️");
 
     answersEl.innerHTML = "";
 
@@ -365,7 +370,11 @@ function checkAnswer(answer) {
   }
 
   // NORMAL QUESTIONS
-  if(answer === correct) {
+ if(answer === correct) {
+
+  celebrate();
+
+  setTimeout(() => {
 
     currentQuestion++;
 
@@ -376,9 +385,7 @@ function checkAnswer(answer) {
       finalScreen.classList.remove("hidden");
     }
 
-  } else {
-    alert("Wrong answer bb hehe try again ❤️");
-  }
+  }, 1200);
 
 }
     function restartQuiz() {
