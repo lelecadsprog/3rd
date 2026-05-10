@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy 3rd Monthsary ❤️</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to bottom right, #ffdee9, #b5fffc);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+      background: white;
+      border-radius: 25px;
+      padding: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: #ff4f81;
+    }
+
+    p {
+      color: #555;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .question {
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    button {
+      border: none;
+      padding: 14px;
+      border-radius: 15px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .answer-btn {
+      background: #ffe3ec;
+      color: #333;
+    }
+
+    .answer-btn:hover {
+      transform: scale(1.02);
+      background: #ffd2e1;
+    }
+
+    .start-btn, .restart-btn {
+      background: #ff4f81;
+      color: white;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .start-btn:hover,
+    .restart-btn:hover {
+      background: #ff2f6b;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .progress {
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: #777;
+    }
+
+    video {
+      width: 100%;
+      border-radius: 20px;
+      margin-top: 20px;
+    }
+
+    .heart {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 24px;
+      }
+
+      .question {
+        font-size: 20px;
+      }
+
+      button {
+        font-size: 15px;
+        padding: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Start Screen -->
+    <div id="start-screen">
+      <div class="heart">❤️</div>
+      <h1>Happy 3rd Monthsary</h1>
+      <p>
+        I made a little game for you hehe.<br>
+        Answer everything correctly to unlock your surprise ❤️
+      </p>
+      <button class="start-btn" onclick="startQuiz()">Start</button>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quiz-screen" class="hidden">
+      <div class="progress" id="progress"></div>
+      <div class="question" id="question"></div>
+      <div class="answers" id="answers"></div>
+    </div>
+
+    <!-- Final Screen -->
+    <div id="final-screen" class="hidden">
+      <div class="heart">🎉</div>
+      <h1>You Did It!</h1>
+      <p>
+        Congratulations my love ❤️<br>
+        Here’s your reward hehe.
+      </p>
+
+      <!-- Replace video.mp4 with your own video file -->
+      <video controls>
+        <source src="video.mp4" type="video/mp4">
+      </video>
+
+      <button class="restart-btn" onclick="restartQuiz()">
+        Play Again
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Who confessed first?",
+        answers: ["Me", "You", "Both"],
+        correct: "Me"
+      },
+      {
+        question: "What is our favorite thing to do together?",
+        answers: ["Sleep", "Eat", "Travel"],
+        correct: "Eat"
+      },
+      {
+        question: "Who is the prettier one? 😏",
+        answers: ["You", "Me", "Both"],
+        correct: "You"
+      }
+    ];
+
+    let currentQuestion = 0;
+
+    const startScreen = document.getElementById("start-screen");
+    const quizScreen = document.getElementById("quiz-screen");
+    const finalScreen = document.getElementById("final-screen");
+
+    function startQuiz() {
+      startScreen.classList.add("hidden");
+      quizScreen.classList.remove("hidden");
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const questionEl = document.getElementById("question");
+      const answersEl = document.getElementById("answers");
+      const progressEl = document.getElementById("progress");
+
+      const current = questions[currentQuestion];
+
+      progressEl.innerText = `Question ${currentQuestion + 1} of ${questions.length}`;
+      questionEl.innerText = current.question;
+
+      answersEl.innerHTML = "";
+
+      current.answers.forEach(answer => {
+        const btn = document.createElement("button");
+        btn.innerText = answer;
+        btn.classList.add("answer-btn");
+
+        btn.onclick = () => checkAnswer(answer);
+
+        answersEl.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(answer) {
+      const correct = questions[currentQuestion].correct;
+
+      if(answer === correct) {
+        currentQuestion++;
+
+        if(currentQuestion < questions.length) {
+          showQuestion();
+        } else {
+          quizScreen.classList.add("hidden");
+          finalScreen.classList.remove("hidden");
+        }
+      } else {
+        alert("Wrong answer hehe try again ❤️");
+      }
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      finalScreen.classList.add("hidden");
+      startScreen.classList.remove("hidden");
+    }
+  </script>
+
+</body>
+</html>
