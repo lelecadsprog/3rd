@@ -134,11 +134,11 @@
     <div id="start-screen">
       <div class="heart">❤️</div>
 
-      <h1>Happy 3rd Monthsary!</h1>
+      <h1>Happy 3rd Monthsary Baby!</h1>
 
       <p>
-        I made a little game for you hehe.<br>
-        Answer everything correctly to unlock your surprise 👀
+        I made a little game for you.<br>
+        Answer everything correctly to unlock your surprise 👀❤️
       </p>
 
       <button class="start-btn" onclick="startQuiz()">
@@ -186,8 +186,8 @@
     const questions = [
       {
         question: "Who confessed first?",
-        answers: ["Me", "You", "Both"],
-        correct: "Me"
+        answers: ["Me", "You"],
+        correct: "You"
       },
       {
         question: "What is our favorite thing to do together?",
@@ -200,7 +200,7 @@
         correct: "November 5"
       },
       {
-        question: "I told you this is when I knew I fell for you, when was it? 😏",
+        question: "I told you this is before. When was the moment I fell for you?",
         answers: [
           "When you and I were talking about person A and B at smoking area",
           "When you took the left over chicken from izakaya",
@@ -370,7 +370,8 @@
 
         gif.style.width = "220px";
         gif.style.borderRadius = "20px";
-        gif.style.marginBottom = "20px";
+        gif.style.display = "block";
+        gif.style.margin = "0 auto 20px auto";
 
         const sweetMessage = document.createElement("div");
 
