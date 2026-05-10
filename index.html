@@ -235,27 +235,28 @@
     }
 
     function showQuestion() {
-      const questionEl = document.getElementById("question");
-      const answersEl = document.getElementById("answers");
-      const progressEl = document.getElementById("progress");
+  const questionEl = document.getElementById("question");
+  const answersEl = document.getElementById("answers");
+  const progressEl = document.getElementById("progress");
 
-      const current = questions[currentQuestion];
+  const current = questions[currentQuestion];
 
-      progressEl.innerText = `Question ${currentQuestion + 1} of ${questions.length}`;
-      questionEl.innerText = current.question;
+  progressEl.innerText = `Question ${currentQuestion + 1} of ${questions.length}`;
+  questionEl.innerText = current.question;
 
-      answersEl.innerHTML = "";
+  answersEl.innerHTML = "";
 
-      current.answers.forEach(answer => {
-        const btn = document.createElement("button");
-        btn.innerText = answer;
-        btn.classList.add("answer-btn");
+  current.answers.forEach(answer => {
+    const btn = document.createElement("button");
 
-        btn.onclick = () => checkAnswer(answer);
+    btn.innerText = answer;
+    btn.classList.add("answer-btn");
 
-        answersEl.appendChild(btn);
-      });
-    }
+    btn.onclick = () => checkAnswer(answer);
+
+    answersEl.appendChild(btn);
+  });
+}
 function celebrate() {
   document.body.style.background =
     "linear-gradient(to bottom right, #ffd6ec, #ffe8a3)";
@@ -287,20 +288,15 @@ function checkAnswer(answer) {
   const current = questions[currentQuestion];
   const correct = current.correct;
 
-  // ONLY FOR LAST 2 QUESTIONS
+  // SPECIAL LAST 2 QUESTIONS
   if(correct === "SPECIAL" || correct === "SPECIAL2") {
 
-    // save clicked answers
-    if(!current.clickedAnswers) {
-      current.clickedAnswers = [];
-    }
+    const answersEl = document.getElementById("answers");
 
-    current.clickedAnswers.push(answer);
-
-    // remove chosen answer
+    // remove clicked answer
     current.answers = current.answers.filter(a => a !== answer);
 
-    // if still has remaining choices
+    // still has remaining wrong answers
     if(current.answers.length > 0) {
 
       alert("Wrong answer bb hehe ❤️");
@@ -308,17 +304,48 @@ function checkAnswer(answer) {
       return;
     }
 
-    // LAST OPTION ALSO WRONG
+    // LAST ANSWER ALSO WRONG
     alert("Wrong answer again HAHAHA 😭❤️");
 
-    // reveal REAL answer in prompt
-    setTimeout(() => {
+    answersEl.innerHTML = "";
 
-      if(correct === "SPECIAL") {
-        alert("Correct answer: ALL OF IT when it’s from you ❤️");
-      } else {
-        alert("Correct answer: There’s literally no correct answer because it’s too much ✅😭");
-      }
+    // GIF
+    const gif = document.createElement("img");
+
+    // PUT YOUR GIF LINK HERE
+   if(correct === "SPECIAL") {
+    gif.src = "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMDFieGQ1eDczemRyanFzbzI0MHZhenJzNmpncGY1emlscjBwNnNqciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Lv2VhwHrt6ljhvZ6LF/giphy.gif";
+    } else {
+    gif.src = "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ODQwczBzNzk0bXVueGR2OWZta3E2emo1dGJpN250bDZsM2JjOXV2cSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Kg5Q7JSJiV0XgrJVRc/giphy.gif";
+    }
+    gif.style.width = "220px";
+    gif.style.borderRadius = "20px";
+    gif.style.marginBottom = "20px";
+
+    // SWEET MESSAGE
+    const sweetMessage = document.createElement("div");
+
+    sweetMessage.style.fontSize = "22px";
+    sweetMessage.style.fontWeight = "bold";
+    sweetMessage.style.color = "#ff4f81";
+    sweetMessage.style.marginBottom = "20px";
+    sweetMessage.style.lineHeight = "1.5";
+
+    if(correct === "SPECIAL") {
+      sweetMessage.innerHTML =
+        "The real answer is... <br><br> ALL OF IT when it’s from you ❤️";
+    } else {
+      sweetMessage.innerHTML =
+        "The real answer is... <br><br> There’s literally no correct answer because it’s too much ✅😭";
+    }
+
+    // CONTINUE BUTTON
+    const continueBtn = document.createElement("button");
+
+    continueBtn.innerText = "AWWWW 🥺";
+    continueBtn.classList.add("answer-btn");
+
+    continueBtn.onclick = () => {
 
       currentQuestion++;
 
@@ -328,14 +355,18 @@ function checkAnswer(answer) {
         quizScreen.classList.add("hidden");
         finalScreen.classList.remove("hidden");
       }
+    };
 
-    }, 500);
+    answersEl.appendChild(gif);
+    answersEl.appendChild(sweetMessage);
+    answersEl.appendChild(continueBtn);
 
     return;
   }
 
   // NORMAL QUESTIONS
   if(answer === correct) {
+
     currentQuestion++;
 
     if(currentQuestion < questions.length) {
@@ -348,6 +379,7 @@ function checkAnswer(answer) {
   } else {
     alert("Wrong answer bb hehe try again ❤️");
   }
+}
 }
     function restartQuiz() {
       currentQuestion = 0;
